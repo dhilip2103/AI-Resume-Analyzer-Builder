@@ -12,7 +12,7 @@ An AI-powered web app to **analyze**, **score**, and **improve resumes** for ATS
 - 📥 Export resumes as PDF
 
 ## 🚀 Tech Stack
-- Frontend: HTML, CSS, JS, Bootstrap, Tailwind
+- Frontend: HTML, CSS, JS, Bootstrap
 - Backend: Python, Django
 - NLP: SpaCy, TextBlob, Gemini API
 - DB: MySQL

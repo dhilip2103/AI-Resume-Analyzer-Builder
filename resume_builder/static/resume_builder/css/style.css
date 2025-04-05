@@ -1,0 +1,83 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.workspace-container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 280px;
+    background-color: #fff;
+    border-right: 1px solid #ddd;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.main-preview {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #fdfdfd;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2a2f45;
+    color: #fff;
+    padding: 10px 20px;
+}
+
+.navbar h4 {
+    margin: 0;
+    font-weight: 600;
+}
+
+.navbar .btn-export {
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.navbar .btn-export:hover {
+    background-color: #45a049;
+}
+
+.tool-section {
+    margin-bottom: 30px;
+}
+
+.tool-section h6 {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+.tool-section select,
+.tool-section input[type="color"],
+.tool-section button {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+button.tool-btn {
+    padding: 8px;
+    width: 100%;
+    margin-bottom: 5px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    cursor: pointer;
+}
+
+button.tool-btn:hover {
+    background-color: #e9e9e9;
+}

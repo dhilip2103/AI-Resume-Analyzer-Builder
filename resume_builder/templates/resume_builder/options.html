@@ -1,0 +1,78 @@
+<!-- Sidebar: Resume Editing Tools -->
+<div class="p-3" style="width: 100%; max-height: 100vh; overflow-y: auto;">
+
+  <!-- 🔤 Font Formatting Section -->
+  <h5 class="mt-3">🔤 Font Section</h5>
+  <hr>
+  <div class="mb-3">
+    <label for="fontFamily" class="form-label">Font Family</label>
+    <select id="fontFamily" class="form-select">
+      <option value="Arial">Arial</option>
+      <option value="Times New Roman">Times New Roman</option>
+      <option value="Calibri">Calibri</option>
+      <option value="Verdana">Verdana</option>
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label for="fontSize" class="form-label">Font Size</label>
+    <input type="number" id="fontSize" class="form-control" min="8" max="72" value="14">
+  </div>
+
+  <div class="btn-group mb-3 w-100" role="group">
+    <button class="btn btn-outline-dark" onclick="format('bold')"><b>B</b></button>
+    <button class="btn btn-outline-dark" onclick="format('italic')"><i>I</i></button>
+    <button class="btn btn-outline-dark" onclick="format('underline')"><u>U</u></button>
+    <button class="btn btn-outline-dark" onclick="format('strikeThrough')"><s>S</s></button>
+  </div>
+
+  <div class="btn-group mb-3 w-100" role="group">
+    <button class="btn btn-outline-dark" onclick="format('subscript')">X<sub>2</sub></button>
+    <button class="btn btn-outline-dark" onclick="format('superscript')">X<sup>2</sup></button>
+  </div>
+
+  <div class="mb-3">
+    <label for="fontColor" class="form-label">Font Color</label>
+    <input type="color" id="fontColor" class="form-control form-control-color">
+  </div>
+
+  <div class="mb-3">
+    <label for="highlightColor" class="form-label">Text Highlight</label>
+    <input type="color" id="highlightColor" class="form-control form-control-color">
+  </div>
+
+  <button class="btn btn-danger w-100 mb-4" onclick="clearFormatting()">Clear Formatting</button>
+
+
+  <!-- 📄 Paragraph Section -->
+  <h5>📄 Paragraph Section</h5>
+  <hr>
+
+  <div class="btn-group mb-3 w-100" role="group">
+    <button class="btn btn-outline-secondary" onclick="format('insertUnorderedList')">• Bullet List</button>
+    <button class="btn btn-outline-secondary" onclick="format('insertOrderedList')">1. Numbered List</button>
+  </div>
+
+  <div class="btn-group mb-3 w-100" role="group">
+    <button class="btn btn-outline-secondary" onclick="format('outdent')">Outdent</button>
+    <button class="btn btn-outline-secondary" onclick="format('indent')">Indent</button>
+  </div>
+
+  <div class="btn-group mb-3 w-100" role="group">
+    <button class="btn btn-outline-secondary" onclick="format('justifyLeft')">Left</button>
+    <button class="btn btn-outline-secondary" onclick="format('justifyCenter')">Center</button>
+    <button class="btn btn-outline-secondary" onclick="format('justifyRight')">Right</button>
+    <button class="btn btn-outline-secondary" onclick="format('justifyFull')">Justify</button>
+  </div>
+
+  <div class="mb-3">
+    <label for="bgColor" class="form-label">Background Color</label>
+    <input type="color" id="bgColor" class="form-control form-control-color" onchange="format('backColor', this.value)">
+  </div>
+
+  <div class="btn-group mb-3 w-100" role="group">
+    <button class="btn btn-outline-secondary" onclick="format('insertHorizontalRule')">Add Line</button>
+    <button class="btn btn-outline-secondary" onclick="format('removeFormat')">Remove Styles</button>
+  </div>
+
+</div>

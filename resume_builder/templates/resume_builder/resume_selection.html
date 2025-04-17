@@ -7,9 +7,24 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        :root {
+            --gradient: linear-gradient(-45deg, rgb(184, 207, 236), rgb(88, 141, 211));
+          }
+          
+        body {
+            background: var(--gradient) !important;
+            min-height: 100vh; /* Optional: Replaces Tailwind's min-h-screen */
+        }   
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
+            
         }
         
         .template-card {
@@ -44,10 +59,11 @@
 </head>
 <body class="bg-gradient-to-br from-gray-50 to-gray-200 min-h-screen">
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg bg-white shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light py-3">
         <div class="container">
-            <a class="navbar-brand font-bold text-2xl text-blue-600" href="#">
-                <span class="text-purple-600">Resume</span>Builder
+            <a class="navbar-brand d-flex align-items-center" href="#">
+                <img src="\static\img\ai_logo.png" alt="Logo" width="40" height="40" class="me-2">
+                AI Resume Pro
             </a>
         </div>
     </nav>
@@ -65,54 +81,69 @@
                 <img src="/static/img/template1_preview.jpg" alt="Template 1" class="template-image w-full h-48 object-cover mb-3">
                 <h2 class="text-xl font-semibold text-gray-800 mb-1">Modern Professional</h2>
                 <p class="text-sm text-gray-600 mb-3">Minimalist White and Grey Professional Resume</p>
-                <form action="{% url 'resume_editor' %}" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="template" value="resume_template1">
-                    <button type="submit" class="select-btn text-sm bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-md inline-block w-full hover:from-blue-600 hover:to-blue-700">
-                        Select Template <span class="ml-2">→</span>
-                    </button>
-                </form>
+                <a href="{% url 'resume_builder:resume_workspace' 'template1' %}" 
+                   class="select-btn text-sm bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-md inline-block w-full hover:from-blue-600 hover:to-blue-700">
+                   Select Template <span class="ml-2">→</span>
+                </a>    
             </div>
-        
+    
             <!-- Template 2 -->
             <div class="template-card bg-white rounded-lg p-4 shadow-md relative overflow-hidden">
                 <div class="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-green-500 to-emerald-500"></div>
                 <img src="/static/images/template2_preview.jpg" alt="Template 2" class="template-image w-full h-48 object-cover mb-3">
                 <h2 class="text-xl font-semibold text-gray-800 mb-1">Creative Layout</h2>
                 <p class="text-sm text-gray-600 mb-3">Innovative design for creative professionals</p>
-                <form action="{% url 'resume_editor' %}" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="template" value="resume_template2">
-                    <button type="submit" class="select-btn text-sm bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-md inline-block w-full hover:from-green-600 hover:to-green-700">
-                        Select Template <span class="ml-2">→</span>
-                    </button>
-                </form>
+                <a href="{% url 'resume_builder:resume_workspace' 'template2' %}"
+                   class="select-btn text-sm bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-md inline-block w-full hover:from-green-600 hover:to-green-700">
+                   Select Template <span class="ml-2">→</span>
+                </a>
             </div>
-        
+    
             <!-- Template 3 -->
             <div class="template-card bg-white rounded-lg p-4 shadow-md relative overflow-hidden">
                 <div class="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500"></div>
                 <img src="/static/images/template3_preview.jpg" alt="Template 3" class="template-image w-full h-48 object-cover mb-3">
                 <h2 class="text-xl font-semibold text-gray-800 mb-1">Executive Style</h2>
                 <p class="text-sm text-gray-600 mb-3">Classic design for leadership roles</p>
-                <form action="{% url 'resume_editor' %}" method="post">
-                    {% csrf_token %}
-                    <input type="hidden" name="template" value="resume_template3">
-                    <button type="submit" class="select-btn text-sm bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-2 rounded-md inline-block w-full hover:from-purple-600 hover:to-purple-700">
-                        Select Template <span class="ml-2">→</span>
-                    </button>
-                </form>
+                <a href="{% url 'resume_builder:resume_workspace' 'template3' %}"
+                   class="select-btn text-sm bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-2 rounded-md inline-block w-full hover:from-purple-600 hover:to-purple-700">
+                   Select Template <span class="ml-2">→</span>
+                </a>
             </div>
         </div>
+    </div>
+    
         
-        
-    <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 mt-12">
-        <div class="container mx-auto px-4 py-6 text-center text-gray-600">
-            © 2023 ResumeBuilder. All rights reserved.
+     <!-- Footer Section -->
+     <footer id="about" class="bg-dark py-4">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <!-- Brand Section -->
+                <div class="col-12 mb-4">
+                    <img src="\static\img\ai_logo.png" alt="Logo" width="40" height="40" class="mx-auto d-block" >
+                    <h3 class="text-white mb-3">AI Resume Pro</h3>
+                    <p class="text-light">Revolutionizing job search through AI-powered resume optimization.</p>
+                </div>
+    
+                <!-- Company Links -->
+                <div class="col-12 col-md-6 mb-4">
+                    <div class="d-flex justify-content-center gap-4">
+                        <a href="#" class="text-white text-decoration-none">About Us</a>
+                        <a href="#" class="text-white text-decoration-none">Contact</a>
+                        <a href="#" class="text-white text-decoration-none">Privacy & Policy</a>
+                    </div>
+                </div>
+    
+                <!-- Copyright -->
+                <div class="col-12">
+                    <hr class="border-secondary mx-auto" style="max-width: 400px;">
+                    <p class="text-light small mt-3 mb-0">
+                        &copy; 2025 AI Resume Pro. All rights reserved.
+                    </p>
+                </div>
+            </div>
         </div>
     </footer>
-
     <script>
         // Add click animation to buttons
         document.querySelectorAll('.select-btn').forEach(button => {

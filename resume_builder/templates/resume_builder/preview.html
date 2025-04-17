@@ -1,23 +1,195 @@
-<!-- preview.html -->
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Resume Preview</title>
-    <link rel="stylesheet" href="{% static 'resume_builder/css/styles.css' %}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>ResumeX | Professional Preview</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- html2pdf.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <style>
+    :root {
+      --primary-500: #6366f1;
+      --primary-600: #4f46e5;
+      --surface-50: #f8fafc;
+      --surface-100: #f1f5f9;
+      --surface-200: #e2e8f0;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+      --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+      --radius-lg: 16px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--surface-100);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .container-lg {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .preview-header {
+      background: white;
+      padding: 1rem 2rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .preview-container {
+      background: white;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      min-height: 80vh;
+      overflow: hidden;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .preview-container:hover {
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: linear-gradient(45deg, var(--primary-500), var(--primary-600));
+      border: none;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+    }
+
+    .btn-outline-secondary {
+      border-color: var(--surface-200);
+    }
+
+    .btn-outline-secondary:hover {
+      background: var(--surface-50);
+      border-color: var(--surface-200);
+      color: black;
+    }
+
+    .empty-state {
+      height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .empty-state i {
+      font-size: 4rem;
+      color: var(--surface-200);
+      margin-bottom: 1.5rem;
+      animation: pulse 2s infinite;
+    }
+
+    .empty-state h4 {
+      color: #475569;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .empty-state p {
+      color: #64748b;
+      max-width: 360px;
+      line-height: 1.5;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @media (max-width: 768px) {
+      body { padding: 1rem; }
+      .preview-header { flex-direction: column; padding: 1rem; }
+      .action-buttons { width: 100%; flex-direction: column; }
+      .btn { width: 100%; justify-content: center; }
+      .preview-container { min-height: 85vh; }
+    }
+  </style>
 </head>
 <body>
-    <div class="container mt-4">
-        <h2 class="text-center mb-4">🔍 Resume Preview</h2>
-        <div id="resumePreview" class="border p-4 bg-light">
-            {% include template_path %}
+
+  <div class="container-lg">
+    <!-- Header Section -->
+    <header class="preview-header">
+      <a href="{% url 'resume_builder:resume_selection' %}" class="btn btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i>Back to Templates
+      </a>
+
+      <div class="action-buttons">
+        <button class="btn btn-primary" onclick="downloadPDF()">
+          <i class="bi bi-file-earmark-pdf"></i>Download PDF
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="preview-container" id="resume-preview">
+      {% if selected_template %}
+        <div class="p-4 p-lg-5">
+          {% include selected_template %}
         </div>
-        <div class="mt-4 text-end">
-            <a href="{% url 'export_resume' format='pdf' %}" class="btn btn-success me-2">Export as PDF</a>
-            <a href="{% url 'export_resume' format='docx' %}" class="btn btn-secondary">Export as DOCX</a>
+      {% else %}
+        <div class="empty-state">
+          <i class="bi bi-file-earmark-excel"></i>
+          <h4>Template Not Selected</h4>
+          <p>Return to the workspace to choose your preferred resume template and start building your professional profile.</p>
         </div>
-    </div>
+      {% endif %}
+    </main>
+  </div>
+
+  <script>
+    function downloadPDF() {
+      const element = document.getElementById("resume-preview");
+
+      const options = {
+        margin:       0.2,
+        filename:     'resume.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+      };
+
+      html2pdf().set(options).from(element).save();
+    }
+  </script>
+
 </body>
 </html>

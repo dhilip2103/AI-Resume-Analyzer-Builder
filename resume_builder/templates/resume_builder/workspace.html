@@ -1,188 +1,239 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Resume Editor</title>
-    <link rel="stylesheet" href="{% static 'resume_builder/css/styles.css' %}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <style>
-        .editor-panel {
-            background: #f8f9fa;
-            border-radius: 10px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-            padding: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        #resumeContent {
-            border: 2px dashed #dee2e6;
-            border-radius: 8px;
-            min-height: 500px;
-            padding: 2rem;
-            background: white;
-            transition: all 0.3s ease;
-        }
+  <meta charset="UTF-8">
+  <title>Resume Editor | Modern Workspace</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #6366f1;
+      --hover-color: #4f46e5;
+      --bg-dark: #1a1b2f;
+      --bg-light: #f8fafc;
+      --glass-bg: rgba(255,255,255,0.05);
+    }
 
-        .control-group {
-            border-right: 1px solid #eee;
-            padding-right: 1.5rem;
-        }
+    body { 
+      height: 100vh; 
+      overflow: hidden;
+      background: linear-gradient(45deg, var(--bg-light) 0%, #f0f4ff 100%);
+      font-family: 'Inter', system-ui, sans-serif;
+    }
 
-        .control-group:last-child {
-            border-right: none;
-        }
+    .toolbar {
+      background: linear-gradient(160deg, var(--bg-dark) 0%, #191a2e 100%);
+      color: white;
+      padding: 14px 30px;
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      flex-wrap: wrap;
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
 
-        .preview-card {
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
+    .toolbar-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding-right: 2rem;
+      border-right: 1px solid rgba(255,255,255,0.15);
+      height: 40px;
+    }
 
-        .font-option {
-            font-family: var(--font-family) !important;
-        }
+    .format-btn {
+      width: 40px;
+      height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+      background: var(--glass-bg);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: white !important;
+      position: relative;
+      overflow: hidden;
+      text-decoration: none;
+    }
 
-        .color-preview {
-            width: 30px;
-            height: 30px;
-            border-radius: 5px;
-            border: 2px solid #dee2e6;
-        }
-    </style>
+    .format-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05));
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .format-btn:hover {
+      background: var(--primary-color);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(99,102,241,0.3);
+    }
+
+    .format-btn:hover::before {
+      opacity: 1;
+    }
+
+    .color-picker-wrapper {
+      position: relative;
+      width: 36px;
+      height: 36px;
+      overflow: hidden;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .color-picker-wrapper input[type="color"] {
+      opacity: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+    }
+
+    .color-preview {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      background: currentColor;
+    }
+
+    .main-content {
+      height: calc(100vh - 80px);
+      padding: 2rem;
+    }
+
+    .preview-area {
+      height: 100%;
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.05);
+      padding: 2.5rem;
+      overflow-y: auto;
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    #resumePreview {
+      min-height: 100%;
+      padding: 2rem;
+      border-radius: 12px;
+      outline: none;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    .form-select-sm {
+      height: 40px;
+      padding: 0.35rem 2rem 0.35rem 1rem;
+      background: var(--glass-bg);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: white !important;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .form-select-sm:focus {
+      box-shadow: 0 0 0 2px var(--primary-color);
+      border-color: transparent;
+    }
+
+    .btn-preview {
+      background: linear-gradient(45deg, #22c55e, #16a34a);
+      color: white;
+      border-radius: 10px;
+      padding: 0.5rem 1rem;
+      border: none;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 500;
+    }
+
+    .btn-preview:hover {
+      background: #16a34a;
+    }
+  </style>
 </head>
-<body class="bg-light">
-    <div class="container py-4">
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2 class="mb-0"><i class="fas fa-pencil-alt me-2"></i>Resume Customizer</h2>
-            <div>
-                <button class="btn btn-outline-secondary me-2" id="resetBtn">
-                    <i class="fas fa-undo me-2"></i>Reset
-                </button>
-                <a href="{% url 'preview' %}" class="btn btn-primary">
-                    <i class="fas fa-eye me-2"></i>Preview
-                </a>
-            </div>
-        </div>
+<body>
 
-        <div class="editor-panel">
-            <div class="row g-4">
-                <!-- Font Controls -->
-                <div class="col-md-4 control-group">
-                    <label class="form-label fw-bold">Text Settings</label>
-                    <div class="mb-3">
-                        <label class="form-label">Font Size <span id="fontSizeValue" class="badge bg-primary">16px</span></label>
-                        <input type="range" id="fontSizeSlider" class="form-range" min="12" max="24" value="16">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Font Family</label>
-                        <select id="fontStyleSelect" class="form-select">
-                            <option value="Arial">Arial</option>
-                            <option value="Times New Roman">Times New Roman</option>
-                            <option value="Georgia">Georgia</option>
-                            <option value="Courier New">Courier New</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Color Controls -->
-                <div class="col-md-4 control-group">
-                    <label class="form-label fw-bold">Color Settings</label>
-                    <div class="mb-3">
-                        <label class="form-label">Text Color</label>
-                        <div class="d-flex align-items-center gap-3">
-                            <input type="color" id="fontColorPicker" class="form-control form-control-color">
-                            <div id="colorPreview" class="color-preview"></div>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Highlight Color</label>
-                        <input type="color" id="highlightColorPicker" class="form-control form-control-color">
-                    </div>
-                </div>
-
-                <!-- Layout Controls -->
-                <div class="col-md-4">
-                    <label class="form-label fw-bold">Layout Settings</label>
-                    <div class="mb-3">
-                        <label class="form-label">Line Height</label>
-                        <select id="lineHeightSelect" class="form-select">
-                            <option value="1.2">Compact</option>
-                            <option value="1.5">Normal</option>
-                            <option value="2.0">Spacious</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Margin Size</label>
-                        <input type="range" id="marginSlider" class="form-range" min="10" max="30" value="20">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="resumeContent" class="preview-card">
-            {% include template_path %}
-        </div>
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <div class="toolbar-group">
+      <button class="format-btn" onclick="format('bold')"><i class="bi bi-type-bold"></i></button>
+      <button class="format-btn" onclick="format('italic')"><i class="bi bi-type-italic"></i></button>
+      <button class="format-btn" onclick="format('underline')"><i class="bi bi-type-underline"></i></button>
     </div>
 
-    <script>
-        // Real-time Controls
-        const updateResumeStyles = () => {
-            const resumeContent = document.getElementById('resumeContent');
-            resumeContent.style.fontSize = `${fontSizeSlider.value}px`;
-            resumeContent.style.fontFamily = fontStyleSelect.value;
-            resumeContent.style.color = fontColorPicker.value;
-            resumeContent.style.lineHeight = lineHeightSelect.value;
-            resumeContent.style.margin = `${marginSlider.value}px auto`;
-            colorPreview.style.backgroundColor = fontColorPicker.value;
-        };
+    <div class="toolbar-group">
+      <select class="form-select-sm" onchange="format('fontName', this.value)">
+        <option value="Arial">Arial</option>
+        <option value="Georgia">Georgia</option>
+        <option value="Verdana">Verdana</option>
+      </select>
 
-        // Font Size Control
-        const fontSizeSlider = document.getElementById('fontSizeSlider');
-        const fontSizeValue = document.getElementById('fontSizeValue');
-        fontSizeSlider.addEventListener('input', () => {
-            fontSizeValue.textContent = `${fontSizeSlider.value}px`;
-            updateResumeStyles();
-        });
+      <select class="form-select-sm" onchange="format('fontSize', this.value)">
+        <option value="1">Small</option>
+        <option value="3">Medium</option>
+        <option value="5">Large</option>
+      </select>
+    </div>
 
-        // Font Family Control
-        const fontStyleSelect = document.getElementById('fontStyleSelect');
-        fontStyleSelect.addEventListener('change', updateResumeStyles);
+    <div class="toolbar-group">
+      <div class="color-picker-wrapper">
+        <input type="color" onchange="updateColor(this, 'foreColor')">
+        <div class="color-preview" style="color: #000000"></div>
+      </div>
+      <div class="color-picker-wrapper">
+        <input type="color" onchange="updateColor(this, 'hiliteColor')">
+        <div class="color-preview" style="color: #ffffff"></div>
+      </div>
+    </div>
 
-        // Color Picker
-        const fontColorPicker = document.getElementById('fontColorPicker');
-        const colorPreview = document.getElementById('colorPreview');
-        fontColorPicker.addEventListener('input', updateResumeStyles);
+    <div class="toolbar-group">
+      <button class="format-btn" onclick="format('insertUnorderedList')"><i class="bi bi-list-ul"></i></button>
+      <button class="format-btn" onclick="format('insertOrderedList')"><i class="bi bi-list-ol"></i></button>
+    </div>
 
-        // Line Height Control
-        const lineHeightSelect = document.getElementById('lineHeightSelect');
-        lineHeightSelect.addEventListener('change', updateResumeStyles);
+    <div class="toolbar-group">
+      <button class="format-btn" onclick="format('justifyLeft')"><i class="bi bi-text-left"></i></button>
+      <button class="format-btn" onclick="format('justifyCenter')"><i class="bi bi-text-center"></i></button>
+      <button class="format-btn" onclick="format('justifyRight')"><i class="bi bi-text-right"></i></button>
+    </div>
 
-        // Margin Control
-        const marginSlider = document.getElementById('marginSlider');
-        marginSlider.addEventListener('input', updateResumeStyles);
+    <div class="toolbar-group">
+      <a href="/resume_builder/preview/" class="btn-preview">
+        <i class="bi bi-eye"></i> Preview
+      </a>
+    </div>
+  </div>
 
-        // Reset Button
-        document.getElementById('resetBtn').addEventListener('click', () => {
-            fontSizeSlider.value = 16;
-            fontStyleSelect.value = 'Arial';
-            fontColorPicker.value = '#000000';
-            lineHeightSelect.value = '1.5';
-            marginSlider.value = 20;
-            updateResumeStyles();
-        });
+  <!-- Preview Area -->
+  <div class="main-content">
+    <div class="preview-area">
+      <div id="resumePreview" class="h-100" contenteditable="true">
+        {% include selected_template %}
+      </div>
+    </div>
+  </div>
 
-        // Initialize preview
-        updateResumeStyles();
+  <script>
+    function format(command, value = null) {
+      document.execCommand(command, false, value);
+      document.getElementById('resumePreview').focus();
+    }
 
-        // Keyboard Shortcuts
-        document.addEventListener('keydown', (e) => {
-            if (e.ctrlKey && e.key === 'z') {
-                // Add undo functionality
-                e.preventDefault();
-            }
-        });
-    </script>
+    function updateColor(input, command) {
+      const color = input.value;
+      format(command, color);
+      input.nextElementSibling.style.color = color;
+    }
+  </script>
+
 </body>
 </html>

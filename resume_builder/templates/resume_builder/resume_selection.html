@@ -65,38 +65,46 @@
                 <img src="/static/img/template1_preview.jpg" alt="Template 1" class="template-image w-full h-48 object-cover mb-3">
                 <h2 class="text-xl font-semibold text-gray-800 mb-1">Modern Professional</h2>
                 <p class="text-sm text-gray-600 mb-3">Minimalist White and Grey Professional Resume</p>
-                <a href="{% url 'resume_workspace' 'template1.html' %}" 
-                   class="select-btn text-sm bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-md inline-block w-full hover:from-blue-600 hover:to-blue-700">
-                   Select Template <span class="ml-2">→</span>
-                </a>
-                
+                <form action="{% url 'resume_editor' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="template" value="resume_template1">
+                    <button type="submit" class="select-btn text-sm bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 rounded-md inline-block w-full hover:from-blue-600 hover:to-blue-700">
+                        Select Template <span class="ml-2">→</span>
+                    </button>
+                </form>
             </div>
-    
+        
             <!-- Template 2 -->
             <div class="template-card bg-white rounded-lg p-4 shadow-md relative overflow-hidden">
                 <div class="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-green-500 to-emerald-500"></div>
                 <img src="/static/images/template2_preview.jpg" alt="Template 2" class="template-image w-full h-48 object-cover mb-3">
                 <h2 class="text-xl font-semibold text-gray-800 mb-1">Creative Layout</h2>
                 <p class="text-sm text-gray-600 mb-3">Innovative design for creative professionals</p>
-                <a href="{% url 'resume_workspace' 'template2.html' %}"
-                   class="select-btn text-sm bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-md inline-block w-full hover:from-green-600 hover:to-green-700">
-                   Select Template <span class="ml-2">→</span>
-                </a>
+                <form action="{% url 'resume_editor' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="template" value="resume_template2">
+                    <button type="submit" class="select-btn text-sm bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-md inline-block w-full hover:from-green-600 hover:to-green-700">
+                        Select Template <span class="ml-2">→</span>
+                    </button>
+                </form>
             </div>
-    
+        
             <!-- Template 3 -->
             <div class="template-card bg-white rounded-lg p-4 shadow-md relative overflow-hidden">
                 <div class="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500"></div>
                 <img src="/static/images/template3_preview.jpg" alt="Template 3" class="template-image w-full h-48 object-cover mb-3">
                 <h2 class="text-xl font-semibold text-gray-800 mb-1">Executive Style</h2>
                 <p class="text-sm text-gray-600 mb-3">Classic design for leadership roles</p>
-                <a href="{% url 'resume_workspace' 'template3.html' %}"
-                   class="select-btn text-sm bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-2 rounded-md inline-block w-full hover:from-purple-600 hover:to-purple-700">
-                   Select Template <span class="ml-2">→</span>
-                </a>
+                <form action="{% url 'resume_editor' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="template" value="resume_template3">
+                    <button type="submit" class="select-btn text-sm bg-gradient-to-r from-purple-500 to-purple-600 text-white px-4 py-2 rounded-md inline-block w-full hover:from-purple-600 hover:to-purple-700">
+                        Select Template <span class="ml-2">→</span>
+                    </button>
+                </form>
             </div>
         </div>
-    </div>
+        
         
     <!-- Footer -->
     <footer class="bg-white border-t border-gray-200 mt-12">

@@ -75,10 +75,11 @@
         </h1>
     
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-4">
+            {% load static %}
             <!-- Template 1 -->
             <div class="template-card bg-white rounded-lg p-4 shadow-md relative overflow-hidden">
                 <div class="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500"></div>
-                <img src="/static/img/template1_preview.jpg" alt="Template 1" class="template-image w-full h-48 object-cover mb-3">
+                <img src="{% static 'img/Double_Column_Resume.jpg' %}" alt="Template 1" class="template-image w-full h-48 object-cover mb-3">
                 <h2 class="text-xl font-semibold text-gray-800 mb-1">Modern Professional</h2>
                 <p class="text-sm text-gray-600 mb-3">Minimalist White and Grey Professional Resume</p>
                 <a href="{% url 'resume_builder:resume_workspace' 'template1' %}" 
@@ -90,7 +91,7 @@
             <!-- Template 2 -->
             <div class="template-card bg-white rounded-lg p-4 shadow-md relative overflow-hidden">
                 <div class="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-green-500 to-emerald-500"></div>
-                <img src="/static/images/template2_preview.jpg" alt="Template 2" class="template-image w-full h-48 object-cover mb-3">
+                <img src="{% static 'img/Professional_Resume.jpg' %}" alt="Template 2" class="template-image w-full h-48 object-cover mb-3">
                 <h2 class="text-xl font-semibold text-gray-800 mb-1">Creative Layout</h2>
                 <p class="text-sm text-gray-600 mb-3">Innovative design for creative professionals</p>
                 <a href="{% url 'resume_builder:resume_workspace' 'template2' %}"
@@ -102,7 +103,7 @@
             <!-- Template 3 -->
             <div class="template-card bg-white rounded-lg p-4 shadow-md relative overflow-hidden">
                 <div class="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-purple-500 to-pink-500"></div>
-                <img src="/static/images/template3_preview.jpg" alt="Template 3" class="template-image w-full h-48 object-cover mb-3">
+                <img src="{% static 'img/Simple_Resume.jpg' %}" alt="Template 3" class="template-image w-full h-48 object-cover mb-3">
                 <h2 class="text-xl font-semibold text-gray-800 mb-1">Executive Style</h2>
                 <p class="text-sm text-gray-600 mb-3">Classic design for leadership roles</p>
                 <a href="{% url 'resume_builder:resume_workspace' 'template3' %}"

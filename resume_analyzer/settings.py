@@ -130,7 +130,8 @@ import os
 
 # Add static files directory for 'user_management' app
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'user_management/static')
+    os.path.join(BASE_DIR, 'user_management/static'),
+    os.path.join(BASE_DIR, 'resume_builder/static'),
     ]
 
 #media files

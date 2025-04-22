@@ -14,9 +14,8 @@ An AI-powered web app to **analyze**, **score**, and **improve resumes** for ATS
 ## 🚀 Tech Stack
 - Frontend: HTML, CSS, JS, Bootstrap
 - Backend: Python, Django
-- NLP: SpaCy, TextBlob, Gemini API
+- NLP: SpaCy, TextBlob, etc... 
 - DB: MySQL
-- Storage: Firebase
 
 ## 📁 Project Structure
 - `resume_analyzer/`
@@ -26,6 +25,8 @@ An AI-powered web app to **analyze**, **score**, and **improve resumes** for ATS
 
 ## 📸 Screenshots
 _Add screenshots or a demo video here!_
+
+
 
 ## 📜 License
 MIT

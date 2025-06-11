@@ -45,6 +45,7 @@ AI-Resume_Analyzer :
 
 ![image](https://github.com/user-attachments/assets/481cdb32-8303-49c6-ab98-9933dad0fb35)
 
+![image](https://github.com/user-attachments/assets/29535f66-cf43-43ba-a340-f79b6a1a5ed7)
 
 Job-Matching :
 

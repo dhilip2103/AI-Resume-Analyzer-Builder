@@ -24,7 +24,10 @@ An AI-powered web app to **analyze**, **score**, and **improve resumes** for ATS
 - `user_management/`
 
 ## 📸 Screenshots
-_Add screenshots or a demo video here!_
+
+Landing Pages :
+[image](https://github.com/user-attachments/assets/ba9fe213-66fd-4b7c-a66e-039e680b3e41)
+![image](https://github.com/user-attachments/assets/fa17d586-3dbd-41d6-b6e9-582ef3351818)
 
 
 
